@@ -7,28 +7,27 @@
 </form>
 </body>
 
-
 <?php
-
 require_once 'conexao.php';
 
-$nome = filter_input(INPUT_POST, 'nome', FILTER_DEFAULT);
+if($_SERVER['REQUEST_METHOD']  == 'POST') {
 
-if(isset($nome) && strlen($nome) > 0) {
-
+    $nome = filter_input(INPUT_POST, 'nome', FILTER_DEFAULT);
     $endereco = filter_input(INPUT_POST, 'endereco', FILTER_DEFAULT);
 
-    $sql = "insert into cliente(nome, endereco) value('$nome', '$endereco')";
+    if (strlen($nome) > 0 && strlen($endereco) > 0) {
 
-    //echo $sql . '<br>';
+        $sql = "insert into cliente(nome, endereco) value('$nome', '$endereco')";
 
-    $conexao->exec($sql);
+        //echo $sql . '<br>';
 
-    $id = $conexao->lastInsertId();
+        $conexao->exec($sql);
 
-    echo "ID cadastrado: $id <br>";
+        $id = $conexao->lastInsertId();
+
+        echo "ID cadastrado: $id <br>";
+    }
 }
-
 ?>
 <a href="index.php">Listagem Clientes</a>
 
