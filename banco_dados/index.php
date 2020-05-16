@@ -18,7 +18,7 @@ $resultado = $consulta->fetchAll(PDO::FETCH_ASSOC);
 
 //echo '<pre>' . print_r($resultado, true) . '</pre>';
 
-echo '<table border="1" >';
+echo '<table style="border: 1px solid black;" >';
 echo '<th>ID</th><th>Nome</th><th>Endereço</th><th>Comandos</th>';
 
 foreach ($resultado as $linha ) {
