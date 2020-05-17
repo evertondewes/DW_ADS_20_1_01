@@ -1,16 +1,7 @@
-<html>
-<body>
-<form method="post" action="cadastro.php">
-    Nome: <input type="text" name="nome"> <br>
-    Enderço: <input type="text" name="endereco">
-    <input type="submit" name="Cadastrar">
-</form>
-</body>
-
 <?php
-require_once 'conexao.php';
+require_once 'bibliotecas/conexao.php';
 
-if($_SERVER['REQUEST_METHOD']  == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $nome = filter_input(INPUT_POST, 'nome', FILTER_DEFAULT);
     $endereco = filter_input(INPUT_POST, 'endereco', FILTER_DEFAULT);
@@ -21,15 +12,43 @@ if($_SERVER['REQUEST_METHOD']  == 'POST') {
 
         //echo $sql . '<br>';
 
-        $conexao->exec($sql);
+        $totalCadastrado = $conexao->exec($sql);
 
-        $id = $conexao->lastInsertId();
+        if ($totalCadastrado == 1) {
+            header('Location: index.php');
+            exit;
+        }
 
-        echo "ID cadastrado: $id <br>";
+//        $id = $conexao->lastInsertId();
+//        echo "ID cadastrado: $id <br>";
     }
 }
+
+$tituloPagina = 'Lista de Usuários';
+require_once 'bibliotecas/head.php';
+
 ?>
-<a href="index.php">Listagem Clientes</a>
+<!doctype html>
+<html lang="pt">
+<body>
 
+<?php
+require_once 'bibliotecas/menu.php';
+?>
+
+<div class="container">
+    <h1 class="page-header">Cadastro Clientes</h1>
+    <div class="table-responsive">
+        <form method="post" action="cadastro.php">
+            <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="text" name="nome" class="form-control"> <br>
+                <label for="endereco">Enderço</label>
+                <input type="text" name="endereco" class="form-control">
+                <input type="submit" name="Cadastrar">
+            </div>
+        </form>
+    </div>
+</div>
+</body>
 </html>
-
