@@ -1,5 +1,6 @@
 <?php
 require_once 'bibliotecas/conexao.php';
+require_once 'bibliotecas/Cliente.php';
 
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
@@ -11,8 +12,9 @@ if (isset($id)) {
     $totalExcluidos = $conexao->exec($sql);
 }
 
-$consulta = $conexao->query('select * from cliente');
-$resultado = $consulta->fetchAll(PDO::FETCH_ASSOC);
+$cliente = new  Cliente();
+
+$resultado = $cliente->listar();
 ?>
 
 <html>

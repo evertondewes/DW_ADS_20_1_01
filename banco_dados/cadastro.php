@@ -1,5 +1,8 @@
 <?php
 require_once 'bibliotecas/conexao.php';
+require_once 'bibliotecas/Cliente.php';
+
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $nome = filter_input(INPUT_POST, 'nome', FILTER_DEFAULT);
@@ -7,11 +10,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (strlen($endereco) > 0 && strlen($nome) > 0) {
 
-        $sql = "insert into cliente(nome, endereco) value('$nome', '$endereco')";
+        $cliente = new Cliente($nome, $endereco);
 
-        //echo $sql . '<br>';
-
-        $totalRegistros = $conexao->exec($sql);
+        $totalRegistros = $cliente->salvar();
 
         if($totalRegistros == 1) {
             header('Location: index.php');
